@@ -12,7 +12,7 @@ import com.example.workout.data.dto.users.CreateOrUpdateUserDTO;
 
 public interface UserService {
 
-    @PostMapping("/create")
+    @PostMapping("/register")
     ResponseEntity<UserDAO> registerUser(@RequestBody CreateOrUpdateUserDTO dto);
 
     @GetMapping("/{username}")
