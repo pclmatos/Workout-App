@@ -18,7 +18,7 @@ public class ExerciseControllerAdvice {
 
     @ExceptionHandler(ExerciseExists.class)
     public ResponseEntity<String> handleExerciseExists(ExerciseExists e) {
-        return new ResponseEntity<String>(e.getMessage(), HttpStatus.FOUND);
+        return new ResponseEntity<String>(e.getMessage(), HttpStatus.CONFLICT);
     }
 
     @ExceptionHandler(NoExercises.class)

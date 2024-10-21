@@ -9,21 +9,21 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table
-public class SetDAO {
+public class SetDao {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
     @ManyToOne
-    private ExerciseInWorkoutDAO exercise;
+    private ExerciseInWorkoutDao exercise;
 
-    private int weigth;
+    private int weight;
     private int reps;
 
-    public SetDAO(ExerciseInWorkoutDAO exercise, int weigth, int reps) {
+    public SetDao(ExerciseInWorkoutDao exercise, int weight, int reps) {
         this.exercise = exercise;
-        this.weigth = weigth;
+        this.weight = weight;
         this.reps = reps;
     }
 
@@ -31,12 +31,12 @@ public class SetDAO {
         return id;
     }
 
-    public ExerciseInWorkoutDAO getExercise() {
+    public ExerciseInWorkoutDao getExercise() {
         return exercise;
     }
 
-    public int getWeigth() {
-        return weigth;
+    public int getWeight() {
+        return weight;
     }
 
     public int getReps() {
@@ -45,7 +45,7 @@ public class SetDAO {
 
     @Override
     public String toString() {
-        return "SetDAO [id=" + id + ", exercise=" + exercise + ", weigth=" + weigth + ", reps=" + reps + "]";
+        return "SetDAO [id=" + id + ", exercise=" + exercise + ", weight=" + weight + ", reps=" + reps + "]";
     }
 
 }

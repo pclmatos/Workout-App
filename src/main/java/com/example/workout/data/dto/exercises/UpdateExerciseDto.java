@@ -1,16 +1,16 @@
 package com.example.workout.data.dto.exercises;
 
-public class UpdateExerciseDTO {
+public class UpdateExerciseDto {
 
     private String name;
     private int type;
     private int body_part;
 
-    public UpdateExerciseDTO() {
+    public UpdateExerciseDto() {
 
     }
 
-    public UpdateExerciseDTO(String name, int type, int body_part) {
+    public UpdateExerciseDto(String name, int type, int body_part) {
         this.name = name;
         this.type = type;
         this.body_part = body_part;

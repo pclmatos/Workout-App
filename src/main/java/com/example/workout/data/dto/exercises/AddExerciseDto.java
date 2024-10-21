@@ -1,15 +1,15 @@
 package com.example.workout.data.dto.exercises;
 
-public class AddExerciseDTO {
+public class AddExerciseDto {
 
     private String name;
     private String bodyPart;
     private String type;
 
-    public AddExerciseDTO() {
+    public AddExerciseDto() {
     }
 
-    public AddExerciseDTO(String name, String bodyPart, String type) {
+    public AddExerciseDto(String name, String bodyPart, String type) {
         this.name = name;
         this.bodyPart = bodyPart;
         this.type = type;

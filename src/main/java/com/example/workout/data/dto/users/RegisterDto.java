@@ -1,9 +1,9 @@
 package com.example.workout.data.dto.users;
 
-public class CreateOrUpdateUserDTO {
+public class RegisterDto {
 
-    private String firstName;
-    private String lastName;
+    private String name;
+    private String surname;
     private String username;
     private String password;
     private String email;
@@ -12,17 +12,17 @@ public class CreateOrUpdateUserDTO {
     private double weight;
     private double height;
 
-    private CreateOrUpdateUserDTO() {
+    private RegisterDto() {
 
     }
 
-    private CreateOrUpdateUserDTO(String username, String password, String firstName, String lastName, String email,
+    private RegisterDto(String username, String password, String name, String surname, String email,
             int gender, int age,
             double weight, double height) {
         this.username = username;
         this.password = password;
-        this.firstName = firstName;
-        this.lastName = lastName;
+        this.name = name;
+        this.surname = surname;
         this.email = email;
         this.weight = weight;
         this.height = height;
@@ -30,12 +30,12 @@ public class CreateOrUpdateUserDTO {
         this.age = age;
     }
 
-    public String getFirstName() {
-        return firstName;
+    public String getName() {
+        return name;
     }
 
-    public String getLastName() {
-        return lastName;
+    public String getSurname() {
+        return surname;
     }
 
     public String getUsername() {

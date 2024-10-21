@@ -12,32 +12,32 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table
-public class ExerciseInWorkoutDAO {
+public class ExerciseInWorkoutDao {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
     @ManyToOne
-    private WorkoutDAO workout;
+    private WorkoutDao workout;
 
     @ManyToOne
-    private ExerciseDAO exercise;
+    private ExerciseDao exercise;
 
     @OneToMany(mappedBy = "id")
-    private List<SetDAO> sets;
+    private List<SetDao> sets;
 
-    public ExerciseInWorkoutDAO(WorkoutDAO workout, ExerciseDAO exercise, List<SetDAO> sets) {
+    public ExerciseInWorkoutDao(WorkoutDao workout, ExerciseDao exercise, List<SetDao> sets) {
         this.workout = workout;
         this.exercise = exercise;
         this.sets = sets;
     }
 
-    public WorkoutDAO getWorkout() {
+    public WorkoutDao getWorkout() {
         return workout;
     }
 
-    public ExerciseDAO getExercise() {
+    public ExerciseDao getExercise() {
         return exercise;
     }
 

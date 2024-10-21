@@ -1,8 +1,8 @@
 package com.example.workout.service.impl;
 
-import java.util.List;
 import java.util.Set;
 import java.util.HashSet;
+import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,9 +16,9 @@ import com.example.workout.common.exception.exercises.ExerciseExists;
 import com.example.workout.common.exception.exercises.NoExercises;
 import com.example.workout.common.utils.BodyPart;
 import com.example.workout.common.utils.ExerciseType;
-import com.example.workout.data.dao.ExerciseDAO;
-import com.example.workout.data.dto.exercises.AddExerciseDTO;
-import com.example.workout.data.dto.exercises.UpdateExerciseDTO;
+import com.example.workout.data.dao.ExerciseDao;
+import com.example.workout.data.dto.exercises.AddExerciseDto;
+import com.example.workout.data.dto.exercises.UpdateExerciseDto;
 import com.example.workout.repository.ExerciseRepository;
 import com.example.workout.service.ExerciseService;
 
@@ -31,8 +31,8 @@ public class ExerciseServiceImpl implements ExerciseService {
     private ExerciseRepository exercises;
 
     @Override
-    public ResponseEntity<List<ExerciseDAO>> getAll() {
-        List<ExerciseDAO> list = (List<ExerciseDAO>) exercises.findAll();
+    public ResponseEntity<List<ExerciseDao>> getAll() {
+        List<ExerciseDao> list = (List<ExerciseDao>) exercises.findAll();
         if (list.isEmpty()) {
             throw new NoExercises();
         }
@@ -41,9 +41,9 @@ public class ExerciseServiceImpl implements ExerciseService {
     }
 
     @Override
-    public ResponseEntity<ExerciseDAO> addExercise(AddExerciseDTO dto) {
+    public ResponseEntity<ExerciseDao> addExercise(AddExerciseDto dto) {
 
-        ExerciseDAO exerciseDAO;
+        ExerciseDao exerciseDAO;
         try {
             exerciseDAO = getByName(dto.getName());
             if (exerciseDAO != null) {
@@ -57,42 +57,38 @@ public class ExerciseServiceImpl implements ExerciseService {
                     ExerciseType.valueOf(dto.getType()),
                     BodyPart.valueOf(dto.getBodyPart()));
 
-            exerciseDAO = new ExerciseDAO(0, dto.getName(), ExerciseType.valueOf(dto.getType()),
+            exerciseDAO = new ExerciseDao(0, dto.getName(), ExerciseType.valueOf(dto.getType()),
                     BodyPart.valueOf(dto.getBodyPart()));
         }
-        return new ResponseEntity<ExerciseDAO>(
+        return new ResponseEntity<ExerciseDao>(
                 exercises.save(exerciseDAO),
                 HttpStatus.CREATED);
 
     }
 
     @Override
-    public ResponseEntity<ExerciseDAO> findByName(String name) {
+    public ResponseEntity<ExerciseDao> findByName(String name) {
 
-        ExerciseDAO exerciseDAO = getByName(name);
+        ExerciseDao exerciseDAO = getByName(name);
 
-        return new ResponseEntity<ExerciseDAO>(exerciseDAO, HttpStatus.OK);
+        return new ResponseEntity<ExerciseDao>(exerciseDAO, HttpStatus.OK);
     }
 
     @Override
-    public ResponseEntity<ExerciseDAO> updateExercise(String name, UpdateExerciseDTO dto) {
-        ExerciseDAO exercise = getByName(name);
+    public ResponseEntity<ExerciseDao> updateExercise(String name, UpdateExerciseDto dto) {
+        ExerciseDao exercise = getByName(name);
         exercise.setName(dto.getName());
 
-        return new ResponseEntity<ExerciseDAO>(exercise, HttpStatus.OK);
-    }
-
-    private ExerciseDAO getByName(String name) {
-        return exercises.findByName(name).orElseThrow(() -> new ExerciseDoesNotExist(name));
+        return new ResponseEntity<ExerciseDao>(exercise, HttpStatus.OK);
     }
 
     @Override
-    public ResponseEntity<Set<ExerciseDAO>> searchExercises(String type, String bodyPart, String name) {
-
-        Set<ExerciseDAO> result = new HashSet<>();
+    public ResponseEntity<Set<ExerciseDao>> searchExercises(String name, String type, String bodyPart) {
+        logger.info("Searching exercises for name {}", name);
+        Set<ExerciseDao> result = new HashSet<>();
         if (name != null) {
-            ExerciseDAO exercise = getByName(name);
-            result.add(exercise);
+            Set<ExerciseDao> set = exercises.findByNameContaining(name);
+            result.addAll(set);
         } else {
             if (type != null && bodyPart != null) {
                 logger.info("Searching exercises for type {} and body part {}", type, bodyPart);
@@ -102,22 +98,26 @@ public class ExerciseServiceImpl implements ExerciseService {
             } else if (type != null && bodyPart == null) {
 
                 logger.info("Searching exercises for type {} ", type);
-                Set<ExerciseDAO> typeSet = exercises.findByType(ExerciseType.valueOf(type));
+                Set<ExerciseDao> typeSet = exercises.findByType(ExerciseType.valueOf(type));
                 result.addAll(typeSet);
             } else {
 
                 logger.info("Searching exercises for body part {}", bodyPart);
-                Set<ExerciseDAO> bodyPartSet = exercises.findByBodyPart(BodyPart.valueOf(bodyPart));
+                Set<ExerciseDao> bodyPartSet = exercises.findByBodyPart(BodyPart.valueOf(bodyPart));
                 result.addAll(bodyPartSet);
 
             }
         }
 
         if (!result.isEmpty()) {
-            return new ResponseEntity<Set<ExerciseDAO>>(result, HttpStatus.OK);
+            return new ResponseEntity<Set<ExerciseDao>>(result, HttpStatus.OK);
         } else {
             throw new NoExercises(String.format("No exercises found for type %s", type));
         }
+    }
+
+    private ExerciseDao getByName(String name) {
+        return exercises.findByName(name).orElseThrow(() -> new ExerciseDoesNotExist(name));
     }
 
 }

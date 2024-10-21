@@ -7,18 +7,20 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
 
 @Entity
-public class WorkoutDAO {
+@Table(name = "workouts")
+public class WorkoutDao {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
     @OneToMany(mappedBy = "workout")
-    private List<ExerciseInWorkoutDAO> exercises;
+    private List<ExerciseInWorkoutDao> exercises;
 
-    public WorkoutDAO(List<ExerciseInWorkoutDAO> exercises) {
+    public WorkoutDao(List<ExerciseInWorkoutDao> exercises) {
         this.exercises = exercises;
     }
 
@@ -26,13 +28,13 @@ public class WorkoutDAO {
         return id;
     }
 
-    public List<ExerciseInWorkoutDAO> getExercises() {
+    public List<ExerciseInWorkoutDao> getExercises() {
         return exercises;
     }
 
     @Override
     public String toString() {
-        return String.format("WorkoutDAO [id=%d, exercises=%s]", id, exercises);
+        return String.format("WorkoutDAO [id='%d', exercises='%s']", id, exercises);
     }
 
 }

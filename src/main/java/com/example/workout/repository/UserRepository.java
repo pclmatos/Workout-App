@@ -5,10 +5,10 @@ import java.util.Optional;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
-import com.example.workout.data.dao.UserDAO;
+import com.example.workout.data.dao.User;
 
 @Repository
-public interface UserRepository extends CrudRepository<UserDAO, Integer> { // Assuming User is the entity class for
-                                                                           // users{
-    Optional<UserDAO> findByUsername(String username);
+public interface UserRepository extends CrudRepository<User, Long> {
+
+    Optional<User> findByUsername(String username);
 }
