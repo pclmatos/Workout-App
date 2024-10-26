@@ -1,15 +1,15 @@
 package com.example.workout.repository;
 
 import java.util.Optional;
-import java.util.UUID;
 
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
-import com.example.workout.model.User;
+import com.example.workout.model.ExerciseType;
 
 @Repository
-public interface UserRepository extends CrudRepository<User, UUID> {
+public interface ExerciseTypeRepository extends CrudRepository<ExerciseType, Long> {
 
-    Optional<User> findByUsername(String username);
+    Optional<ExerciseType> findByName(String name);
+
 }

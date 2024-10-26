@@ -10,9 +10,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
-import com.example.workout.data.dao.ExerciseDao;
-import com.example.workout.data.dto.exercises.AddExerciseDto;
-import com.example.workout.data.dto.exercises.UpdateExerciseDto;
+import com.example.workout.model.Exercise;
+import com.example.workout.model.dto.exercises.AddExerciseDto;
+import com.example.workout.model.dto.exercises.ExerciseDto;
+import com.example.workout.model.dto.exercises.UpdateExerciseDto;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -28,7 +29,7 @@ public interface ExerciseService {
                         @ApiResponse(responseCode = "200", description = "A list with all exercises"),
                         @ApiResponse(responseCode = "404", description = "No exercises found")
         })
-        ResponseEntity<List<ExerciseDao>> getAll();
+        ResponseEntity<List<ExerciseDto>> getAll();
 
         @PostMapping("")
         @Operation(summary = "Add a new exercise")
@@ -36,7 +37,7 @@ public interface ExerciseService {
                         @ApiResponse(responseCode = "201", description = "Exercise created successfully"),
                         @ApiResponse(responseCode = "409", description = "Exercise already exists")
         })
-        ResponseEntity<ExerciseDao> addExercise(@RequestBody AddExerciseDto dto);
+        ResponseEntity<ExerciseDto> addExercise(@RequestBody AddExerciseDto dto);
 
         @GetMapping("/{name}")
         @Operation(summary = "Get exercise by name")
@@ -44,7 +45,7 @@ public interface ExerciseService {
                         @ApiResponse(responseCode = "200", description = "Exercise found"),
                         @ApiResponse(responseCode = "404", description = "Exercise not found")
         })
-        ResponseEntity<ExerciseDao> findByName(@PathVariable String name);
+        ResponseEntity<Exercise> findByName(@PathVariable String name);
 
         @PutMapping("/{name}")
         @Operation(summary = "Update exercise by name")
@@ -52,7 +53,7 @@ public interface ExerciseService {
                         @ApiResponse(responseCode = "200", description = "Exercise updated"),
                         @ApiResponse(responseCode = "404", description = "Exercise not found")
         })
-        ResponseEntity<ExerciseDao> updateExercise(@PathVariable String name, @RequestBody UpdateExerciseDto dto);
+        ResponseEntity<Exercise> updateExercise(@PathVariable String name, @RequestBody UpdateExerciseDto dto);
 
         @GetMapping("/search")
         @Operation(summary = "Search exercises by name, type, and body part")
@@ -60,7 +61,7 @@ public interface ExerciseService {
                         @ApiResponse(responseCode = "200", description = "Exercises found"),
                         @ApiResponse(responseCode = "404", description = "No exercises found matching the search criteria")
         })
-        ResponseEntity<Set<ExerciseDao>> searchExercises(@PathParam(value = "name") String name,
+        ResponseEntity<List<Exercise>> searchExercises(@PathParam(value = "name") String name,
                         @PathParam(value = "type") String type,
                         @PathParam(value = "bodyPart") String bodyPart);
 

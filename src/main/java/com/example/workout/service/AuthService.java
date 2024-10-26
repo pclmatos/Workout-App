@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 public interface AuthService {
 
-    @PostMapping("/login")
-    public ResponseEntity<String> login(@RequestBody Authentication auth);
+    @PostMapping("/signin")
+    public ResponseEntity<String> signin(@RequestBody Authentication auth);
 
 }

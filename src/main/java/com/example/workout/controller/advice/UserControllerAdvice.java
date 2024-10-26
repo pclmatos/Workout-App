@@ -1,4 +1,4 @@
-package com.example.workout.controller;
+package com.example.workout.controller.advice;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

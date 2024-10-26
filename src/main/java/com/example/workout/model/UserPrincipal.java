@@ -1,14 +1,12 @@
-package com.example.workout.data;
+package com.example.workout.model;
 
 import java.util.Collection;
+import java.util.List;
 import java.util.stream.Collectors;
-import java.util.Arrays;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-
-import com.example.workout.data.dao.User;
 
 public class UserPrincipal implements UserDetails {
 
@@ -20,7 +18,8 @@ public class UserPrincipal implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return Arrays.stream(user.getRoles().split(",")).map(SimpleGrantedAuthority::new).collect(Collectors.toList());
+        return List.of(user.getRole().getAuthority()).stream().map(SimpleGrantedAuthority::new)
+                .collect(Collectors.toList());
     }
 
     @Override
@@ -51,6 +50,10 @@ public class UserPrincipal implements UserDetails {
     @Override
     public boolean isEnabled() {
         return true;
+    }
+
+    public User getUser() {
+        return user;
     }
 
 }

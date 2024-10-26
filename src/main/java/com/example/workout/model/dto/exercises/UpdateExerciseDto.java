@@ -1,4 +1,4 @@
-package com.example.workout.data.dto.exercises;
+package com.example.workout.model.dto.exercises;
 
 public class UpdateExerciseDto {
 
